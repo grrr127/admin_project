@@ -52,7 +52,9 @@
             autocomplete="off"
             required
           />
-          <div class="invalid-feedback">아이디는 6자 이상이어야 합니다.</div>
+          <div class="invalid-feedback">
+            아이디는 6자 이상이며, 영문(소문자)과 숫자만 사용 가능합니다.
+          </div>
         </div>
         <!-- 비밀번호 입력 -->
         <div class="mb-3">
@@ -112,6 +114,9 @@
             autocomplete="off"
             required
           />
+          <div class="invalid-feedback">
+            전화번호를 숫자만 정확히 입력해주세요.
+          </div>
         </div>
         <!-- 성별 선택 -->
         <div class="mb-3">
@@ -151,6 +156,7 @@
             title="정확한 메일 주소를 작성해주세요"
             autocomplete="off"
           />
+          <div class="invalid-feedback">정확한 이메일 주소를 입력해주세요.</div>
         </div>
         <button type="submit" class="btn btn-primary w-100 mt-3">가입</button>
       </form>

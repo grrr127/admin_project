@@ -10,10 +10,13 @@ const form = document.getElementById("form");
 const userIdInput = document.getElementById("idInput");
 const userPw1Input = document.getElementById("pw1Input");
 const userPw2Input = document.getElementById("pw2Input");
+const userPhoneInput = document.getElementById("phoneInput");
+const userEmailInput = document.getElementById("emailInput");
 
 // id 실시간 유효성 검사
 function validateId() {
-  if (userIdInput.value.length < 6) {
+  const idRegex = /^[a-z0-9]{6,}$/;
+  if (!idRegex.test(userIdInput.value)){
     userIdInput.classList.add("is-invalid");
     return false;
   } else {
@@ -46,6 +49,30 @@ function validatePasswordMatch() {
   }
 }
 
+// 전화번호가 숫자로만 가능하게 10,11자로
+function validatePhone() {
+  const phoneRegex = /^[0-9]{10,11}$/;
+  if (!phoneRegex.test(userPhoneInput.value)) {
+    userPhoneInput.classList.add("is-invalid");
+    return false;
+  } else {
+    userPhoneInput.classList.remove("is-invalid");
+    return true;
+  }
+}
+
+// 이메일이 맞는 양식인지
+function validateEmail() {
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  if (userEmailInput.value === "" || emailRegex.test(userEmailInput.value)) {
+    userEmailInput.classList.remove("is-invalid");
+    return true;
+  } else {
+    userEmailInput.classList.add("is-invalid");
+    return false;
+  }
+}
+
 // 작성하면 바로 유효성 검사
 userIdInput.addEventListener("keyup", validateId);
 userIdInput.addEventListener("blur", validateId); // 벗어날때 검사
@@ -56,6 +83,14 @@ userPw1Input.addEventListener("blur", validatePasswordComplexity);
 userPw2Input.addEventListener("keyup", validatePasswordMatch);
 userPw2Input.addEventListener("blur", validatePasswordMatch);
 
+// 전화번호 검사
+userPhoneInput.addEventListener("keyup", validatePhone);
+userPhoneInput.addEventListener("blur", validatePhone);
+
+// 이메일 검사
+userEmailInput.addEventListener("keyup", validateEmail);
+userEmailInput.addEventListener("blur", validateEmail);
+
 // 폼 제출 시 최종 유효성 검사
 form.addEventListener("submit", function (event) {
   event.preventDefault(); // 기본 기능 차단(새로고침x)
@@ -63,13 +98,13 @@ form.addEventListener("submit", function (event) {
   const isIdValid = validateId();
   const isPasswordComplexityValid = validatePasswordComplexity();
   const isPasswordMatchValid = validatePasswordMatch(); 
+  const isPhoneValid = validatePhone();
+  const isEmailValid = validateEmail();
 
   // 통과하면 넘기기
-if (isIdValid && isPasswordComplexityValid && isPasswordMatchValid) {
+if (isIdValid && isPasswordComplexityValid && isPasswordMatchValid && isPhoneValid && isEmailValid) {
     const userNameInput = document.getElementById("nameInput");
-    const userPhoneInput = document.getElementById("phoneInput");
     const userGender = form.elements.gender.value;
-    const userEmailInput = document.getElementById("emailInput");
 
     const userId = userIdInput.value;
     const userName = userNameInput.value;
